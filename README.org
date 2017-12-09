@@ -59,3 +59,7 @@ The database was populated as follows:
 
 - Using full text search to analyze plot information.
 - Adding PostGIS support for location based querying.
+
+** License
+
+This project, but not the data itself, is licensed under GPLv3
