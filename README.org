@@ -1,0 +1,61 @@
+#+AUTHOR: Jeremiah Peschka
+#+EMAIL: jeremiah.peschka@gmail.com
+#+STARTUP: indent showall
+#+OPTIONS: tags:nil
+
+** Purpose
+
+Create a sample database for PostgreSQL using publicly available data.
+
+** Using the Sample Database
+
+1. Import the sample data using [[file:sql/data-load.sql][data.sql]] - this is a =pg_dump= generated dump of
+   all data.
+2. That's it, start querying.
+
+If you want to import the data yourself, see [[ds][the Data Source section]]
+
+** Schema
+
+[[file:erd.png]]
+
+** Data Source
+<<ds>>
+
+The data is originally from the [[https://webscrapingforum.promptcloud.com/t/giveaway-heres-a-spooky-dataset-for-halloween/70][prompt cloud "Spooky Dataset for Halloween"]].
+This data set was crawled from IMDB data. As human entered data, the data is
+messy - columns are frequently missing values or the values are sloppily
+entered. Minimal effort has been spent on data cleansing.
+
+Data was loaded using [[file:sql/data-load.sql][a PL/PG SQL script]].
+
+/N.B./ This data is specific to the horror genre. However, the horror genre is
+still a part of the data. If you are analyzing genre information, make sure to
+exclude "horror" or your results will be skewed.
+
+*** About the Data Load
+
+The database was populated as follows:
+
+1. Data is loaded into a staging table using the =copy= command.
+2. The release year is extracted from either the release date column or from
+   parsing the movie title. If this title is only 4 characters long, we can
+   assume it’s a single year. Otherwise, we parse it as a date and extract the
+   year.
+3. The locations, genres, countries, and actors tables are populated by reading
+   from the =imdb_staging= table and parsing the pipe delimited string that
+   contains data for each respective column.
+4. The ratings column is entered from a hand written =INSERT= statement. My
+   original goal was to put the list in ascending of “naughtiness” (for lack of
+   a better word). This did not happen and, in hindsight, I should have used a
+   =SELECT= statement.
+5. Movies are loaded from the staging table and then connected to the locations,
+   genres, countries, and actors tables by a series of join tables.
+6. Budget data is cleaned and separated into a currency unit and a currency.
+   Then the currencies are normalized to 2017 USD. No effort is made to apply
+   inflation.
+
+** Interesting Future Work
+
+- Using full text search to analyze plot information.
+- Adding PostGIS support for location based querying.
