@@ -27,7 +27,7 @@ This data set was crawled from IMDB data. As human entered data, the data is
 messy - columns are frequently missing values or the values are sloppily
 entered. Minimal effort has been spent on data cleansing.
 
-Data was loaded using [[file:sql/data-load.sql][a PL/PG SQL script]].
+Data was loaded using [[file:sql/data-load.sql][a PL/pgSQL script]].
 
 /N.B./ This data is specific to the horror genre. However, the horror genre is
 still a part of the data. If you are analyzing genre information, make sure to
