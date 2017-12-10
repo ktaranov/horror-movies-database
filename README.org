@@ -10,7 +10,7 @@ Create a sample database for PostgreSQL using publicly available data.
 ** Using the Sample Database
 
 1. Import the sample data using [[file:sql/data-load.sql][data.sql]] - this is a =pg_dump= generated dump of
-   all data.
+   all data. =psql -f sql/data.sql= should load the database.
 2. That's it, start querying.
 
 If you want to import the data yourself, see [[ds][the Data Source section]]
@@ -62,4 +62,4 @@ The database was populated as follows:
 
 ** License
 
-This project, but not the data itself, is licensed under GPLv3
+This project, but not the data itself, is licensed under GPLv3.
